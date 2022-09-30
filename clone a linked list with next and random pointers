@@ -1,0 +1,92 @@
+class solution
+{
+    //ye wala sbse optimised solution h. TC: O(n) and space complexity o(1)
+    private:
+    void insert(Node* &clonehead,Node*&clonetail,int d)
+    {
+        Node* newnode=new Node(d);
+        if(clonehead==NULL)
+        {
+            clonehead=newnode;
+            clonetail=newnode;
+        }
+        else
+        {
+            clonetail->next=newnode;
+            clonetail=newnode;
+        }
+        
+    }
+    public:
+    Node *copyList(Node *head)
+    {   
+        //simply cloning the original list into the clone linked list using next  ptr only
+        Node* clonehead=NULL;
+        Node* clonetail=NULL;
+        Node* temp=head;
+
+        while(temp!=NULL)
+        {
+            insert(clonehead,clonetail,temp->data);
+            temp=temp->next;
+        }
+        
+        //making the links between original and clone list.
+        Node* originalptr=head;
+        Node* cloneptr=clonehead;
+        
+        while(originalptr!=NULL && cloneptr!=NULL)
+        {
+            Node *next1=originalptr->next;
+            originalptr->next=cloneptr;
+            originalptr=next1;
+            
+            Node* next2=cloneptr->next;
+            cloneptr->next=originalptr;
+            cloneptr=next2;
+        }
+        
+        //making the random links
+        
+        temp=head;
+          
+        while(temp!=NULL)
+        {
+            if(temp->next!=NULL && temp->arb!=NULL)
+            {
+            temp->next->arb=temp->arb->next; //kyunki clone wale element se point krwana h na ki original ke element se.
+            }
+            else
+            {
+                temp->next=temp->arb; //jo ki NULL hoga;
+            }
+            if(temp->next->next!=NULL)
+            {
+                temp=temp->next->next;
+            }
+            
+            
+        }
+       
+       //reverting the links
+       temp=head;
+       while(temp!=NULL)
+       {
+           Node* clone=temp->next;
+           Node* next1=clone->next;
+           
+           temp->next=next1;
+           
+           if(next1->next!=NULL)
+           {
+                clone->next=next1->next;
+           }
+           
+           
+           temp=temp->next;
+           
+       }
+       
+        return clonehead;
+    }
+};
