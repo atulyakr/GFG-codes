@@ -2,6 +2,7 @@ question link:   https://practice.geeksforgeeks.org/problems/diameter-of-binary-
 solution video link:  https://www.youtube.com/watch?v=nHMQ33LZ6oA&list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&index=69
 time stamp: 14:18
 
+Approach 1: time complexity: o(n^2) space complexity: o(height) 
 struct Node
 {
     int data;
@@ -47,3 +48,41 @@ class Solution {
     }
     
 };
+
+approach 2: time complexity: o(n) space complexity: o(height)
+
+
+class Solution {
+    
+  public:
+    // Function to return the diameter of a Binary Tree.
+
+        pair<int,int> diameterfast(Node* root) {
+        if(root==NULL)
+        {
+            pair<int,int>p=make_pair(0,0);
+            return p;
+        }
+        
+        pair<int,int>left=diameterfast(root->left);
+        pair<int,int>right=diameterfast(root->right);
+        
+        int op1=left.first;                  //first me diameter ki value.
+        int op2=right.first;
+        
+        int op3=left.second+right.second+1;  //kyunki second me height store kar rahe h.
+        
+        pair<int,int>ans;
+        ans.first =max(op1,max(op2,op3));
+        ans.second=max(left.second,right.second)+1;
+        
+        return ans;
+    }
+    
+    int diameter(Node* root)
+    {
+        return diameterfast(root).first;
+    }
+    
+};
+ 
