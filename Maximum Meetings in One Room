@@ -1,0 +1,50 @@
+// Question link: https://practice.geeksforgeeks.org/problems/maximum-meetings-in-one-room/1
+
+
+ struct triplet{
+     int x,y,z;
+ }; 
+    
+    
+class Solution
+{
+    public:
+    //Function to find the maximum number of meetings that can
+    //be performed in a meeting room.
+    static bool cmp(triplet first, triplet second )
+    {
+        return first.y < second.y;
+    }
+    
+    vector<int> maxMeetings(int N,vector<int> &S,vector<int> &F)
+    {
+        vector<int>ans;
+        vector<triplet> v;
+        
+        for(int i=0;i<N;i++)
+        {
+            v.push_back({S[i],F[i],i+1});
+        }
+        
+        
+        
+        sort(v.begin(),v.end(),cmp);
+        
+        
+       
+        int ansEnd=v[0].y;
+        ans.push_back(v[0].z);
+        cout<<endl;
+        for(int i=1;i<N;i++)
+        {
+            if(v[i].x>ansEnd)
+            {
+                ans.push_back(v[i].z);
+                ansEnd=v[i].y;
+            }
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+    
+};
