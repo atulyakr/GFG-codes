@@ -1,0 +1,33 @@
+Question link: https://practice.geeksforgeeks.org/problems/shop-in-candy-store1145/1
+
+class Solution
+{
+public:
+    vector<int> candyStore(int candies[], int N, int K)
+    {
+        vector<int>ans;
+        sort(candies,candies+N);
+        int max_price=0, min_price=0;
+        
+        int j=N-1;
+        int i=0;
+        while(i<=j)
+        {
+            min_price+=candies[i];
+            j-=K;
+            i++;
+        }
+        ans.push_back(min_price);
+        i=N-1;
+        j=0;
+        while(j<=i)
+        {
+            max_price+=candies[i];
+            j+=K;
+            i--;
+        }
+        ans.push_back(max_price);
+        
+        return ans;
+    }
+};
